@@ -2,6 +2,21 @@
 name = "np1-rust"
 version = "0.1.0"
 edition = "2021"
+authors = ["National Payroll One <nationalpayrollone@gmail.com", "Raymond Mendelovits <raymondmendelovits@gmail.com"]
+rust-version = "1.75.0"
+
+license = "GPL-3.0-or-later"
+homepage = "https://github.com/nationalpayrollone/np1-rust"
+repository = "https://github.com/nationalpayrollone/np1-rust"
+documentation = "https://docs.rs/np1-rust/0.1.0/"
+readme = "README-crates.io.md"
+
+description = """
+The enum `Either` with variants `Left` and `Right` is a general purpose sum type with two cases.
+"""
+
+keywords = ["payroll", "Canada", "api"]
+categories = ["finance"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
