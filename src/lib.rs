@@ -26,6 +26,88 @@ pub fn annual_taxable_income_commission(i1: isize, f: isize, f2: isize, f5a: isi
     i1 - f - f2 - f5a - u1 - hd - f1 - e
 }
 
+#[allow(clippy::too_many_arguments)]
+pub fn annual_basic_federal_tax(r: isize, a: isize, k: isize, k1: isize, k2: isize, k3: isize, k4: isize) -> isize {
+    let fit = (r * a) - k - k1 - k2 - k3 - k4;
+    if fit < 0 {
+        return 0;
+    }
+    fit
+}
+
+#[allow(clippy::too_many_arguments)]
+pub fn annual_basic_federal_tax_quebec(r: isize, a: isize, k: isize, k1: isize, k2q: isize, k3: isize, k4: isize) -> isize {
+    let fit = (r * a) - k - k1 - k2q - k3 - k4;
+    if fit < 0 {
+        return 0;
+    }
+    fit
+}
+
+pub fn annual_federal_tax_payable(t3: isize, p: isize, lcf: isize) -> isize {
+    let ftp = t3 - (p * lcf);
+    if ftp < 0 {
+        return 0;
+    }
+    ftp
+}
+
+pub fn annual_federal_tax_payable_quebec(t3: isize, p: isize, lcf: isize) -> isize {
+    let ftp = t3 - (p * lcf) - (0.165 as isize * t3);
+    if ftp < 0 {
+        return 0;
+    }
+    ftp
+}
+
+pub fn annual_federal_tax_payable_outside(t3: isize, p: isize, lcf: isize) -> isize {
+    let ftp = t3 + (0.48 as isize * t3) - (p * lcf);
+    if ftp < 0 {
+        return 0;
+    }
+    ftp
+}
+
+#[allow(clippy::too_many_arguments)]
+pub fn annual_basic_provincial_tax(v: isize, a: isize, kp: isize, k1p: isize, k2p: isize, k3p: isize, k4p: isize) -> isize {
+    let pit =(v * a) - kp - k1p - k2p - k3p - k4p;
+    if pit < 0 {
+        return 0;
+    }
+    pit
+}
+
+#[allow(clippy::too_many_arguments)]
+pub fn annual_basic_terrirotial_tax(v: isize, a: isize, kp: isize, k1p: isize, k2p: isize, k3p: isize, k4p: isize) -> isize {
+    annual_basic_provincial_tax(v, a, kp, k1p, k2p, k3p, k4p)
+}
+
+#[allow(clippy::too_many_arguments)]
+pub fn annual_provincial_tax_deduction(t4: isize, v1: isize, v2: isize, s: isize, p: isize, lcp: isize) -> isize {
+    let ptd = t4 + v1 + v2 - s - (p * lcp);
+    if ptd < 0 {
+        return 0;
+    }
+    ptd
+}
+
+#[allow(clippy::too_many_arguments)]
+pub fn annual_territorial_tax_deduction(t4: isize, v1: isize, v2: isize, s: isize, p: isize, lcp: isize) -> isize {
+    annual_provincial_tax_deduction(t4, v1, v2, s, p, lcp)
+}
+
+pub fn edtimated_federal_and_provincial_tax_deductions(t1: isize, t2: isize, p: isize, l: isize) -> isize {
+    ((t1 + t2) / p) + l
+}
+
+pub fn edtimated_federal_and_territorial_tax_deductions(t1: isize, t2: isize, p: isize, l: isize) -> isize {
+    edtimated_federal_and_provincial_tax_deductions(t1, t2, p, l)
+}
+
+pub fn edtimated_federal_and_quebec_tax_deductions(t1: isize, p: isize, l: isize) -> isize {
+    edtimated_federal_and_provincial_tax_deductions(t1, 0, p, l)
+}
+
 pub fn pay_periods(period: &str, custom: Option<u16>) -> u16 {
     const YEAR: i32 = 2024;
     match period {
